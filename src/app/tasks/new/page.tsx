@@ -59,4 +59,85 @@ export default function NewTaskPage() {
 
   if (authLoading) {
     return (
-      <div className="flex min-h-[60
+      <div className="flex items-center justify-center py-10">
+        <Spinner />
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return (
+      <div className="flex items-center justify-center py-10">
+        <p className="text-sm text-gray-600">Please log in to create a task.</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mx-auto max-w-2xl px-4 py-8">
+      <Card>
+        <CardHeader title="New Task" />
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <label htmlFor="title" className="text-sm font-medium">
+                Title
+              </label>
+              <Input
+                id="title"
+                value={title}
+                onChange={event => setTitle(event.target.value)}
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="description" className="text-sm font-medium">
+                Description
+              </label>
+              <Input
+                id="description"
+                value={description}
+                onChange={event => setDescription(event.target.value)}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="dueDate" className="text-sm font-medium">
+                Due date
+              </label>
+              <Input
+                id="dueDate"
+                type="date"
+                value={dueDate}
+                onChange={event => setDueDate(event.target.value)}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="priority" className="text-sm font-medium">
+                Priority
+              </label>
+              <select
+                id="priority"
+                className="w-full rounded border border-gray-300 px-3 py-2 text-sm"
+                value={priority}
+                onChange={event => setPriority(event.target.value as 'low' | 'medium' | 'high')}
+              >
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+
+            {error ? <p className="text-sm text-red-500">{error}</p> : null}
+
+            <Button type="submit" disabled={loading}>
+              {loading ? 'Creating...' : 'Create Task'}
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
