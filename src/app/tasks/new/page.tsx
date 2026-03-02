@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Button from '@/components/ui/Button';
 import Card, { CardContent, CardHeader } from '@/components/ui/Card';
 import Input from '@/components/ui/Input';
+import Spinner from '@/components/ui/Spinner';
 import { useAuth } from '@/providers/AuthProvider';
 import { useToast } from '@/providers/ToastProvider';
 
@@ -58,83 +59,4 @@ export default function NewTaskPage() {
 
   if (authLoading) {
     return (
-      <div className="flex min-h-[60vh] items-center justify-center">
-        <Spinner className="h-8 w-8" />
-      </div>
-    );
-  }
-
-  if (!isAuthenticated) {
-    return (
-      <section className="mx-auto max-w-3xl px-4 py-10">
-        <Card>
-          <CardHeader>
-            <h1 className="text-xl font-semibold">Create task</h1>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-secondary">Please log in to create a task.</p>
-          </CardContent>
-        </Card>
-      </section>
-    );
-  }
-
-  return (
-    <section className="mx-auto flex max-w-3xl flex-col gap-6 px-4 py-10">
-      <Card>
-        <CardHeader>
-          <h1 className="text-2xl font-semibold">Create a new task</h1>
-          <p className="text-sm text-secondary">Fill out the details below.</p>
-        </CardHeader>
-        <CardContent>
-          <form className="space-y-4" onSubmit={handleSubmit}>
-            <Input
-              label="Title"
-              type="text"
-              name="title"
-              value={title}
-              onChange={event => setTitle(event.target.value)}
-              required
-            />
-            <div className="space-y-1">
-              <label className="block text-sm font-medium text-foreground" htmlFor="description">Description</label>
-              <textarea
-                id="description"
-                className="w-full rounded-md border border-border px-3 py-2 text-sm"
-                rows={4}
-                value={description}
-                onChange={event => setDescription(event.target.value)}
-              />
-            </div>
-            <div className="grid gap-4 md:grid-cols-2">
-              <Input
-                label="Due date"
-                type="date"
-                name="dueDate"
-                value={dueDate}
-                onChange={event => setDueDate(event.target.value)}
-              />
-              <div className="space-y-1">
-                <label className="block text-sm font-medium text-foreground" htmlFor="priority">Priority</label>
-                <select
-                  id="priority"
-                  className="w-full rounded-md border border-border px-3 py-2 text-sm"
-                  value={priority}
-                  onChange={event => setPriority(event.target.value as 'low' | 'medium' | 'high')}
-                >
-                  <option value="low">Low</option>
-                  <option value="medium">Medium</option>
-                  <option value="high">High</option>
-                </select>
-              </div>
-            </div>
-            {error && <p className="text-sm text-error">{error}</p>}
-            <div className="flex justify-end">
-              <Button type="submit" loading={loading}>Create task</Button>
-            </div>
-          </form>
-        </CardContent>
-      </Card>
-    </section>
-  );
-}
+      <div className="flex min-h-[60
